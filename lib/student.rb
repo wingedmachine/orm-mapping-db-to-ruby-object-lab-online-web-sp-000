@@ -14,13 +14,17 @@ class Student
     # remember each row should be a new instance of the Student class
   end
 
+  def self.all_students_in_grade_9
+    self.all.select { |student| student.grade = "9th" }
+  end
+
   def self.find_by_name(name)
     sql = <<-SQL
       SELECT *
       FROM students
       WHERE name = ?
     SQL
-    
+
     Student.new_from_db(DB[:conn].execute(sql, name).first)
   end
 
