@@ -47,14 +47,14 @@ class Student
     self.first_X_students_in_grade_10(1).first
   end
 
-  def self.all_students_in_grade_X
+  def self.all_students_in_grade_X(grade)
     sql = <<-SQL
       SELECT *
       FROM students
-      WHERE grade = 9
+      WHERE grade = ?
     SQL
 
-    DB[:conn].execute(sql).map { |row| Student.new_from_db(row) }
+    DB[:conn].execute(sql, grade).map { |row| Student.new_from_db(row) }
   end
 
   def self.find_by_name(name)
