@@ -15,7 +15,13 @@ class Student
   end
 
   def self.all_students_in_grade_9
-    self.all.select { |student| student.grade = "9th" }
+    sql = <<-SQL
+      SELECT *
+      FROM students
+      WHERE grade = '9th'
+    SQL
+
+    DB[:conn].execute(sql).map { |row| Student.new_from_db(row) }
   end
 
   def self.find_by_name(name)
